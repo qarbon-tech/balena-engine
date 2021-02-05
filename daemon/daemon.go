@@ -948,7 +948,7 @@ func NewDaemon(ctx context.Context, config *config.Config, pluginStore *plugin.S
 				err == storagemigration.ErrOverlayRootExists {
 				// gracefully handle missing aufs root or existing
 				// overlay root - we have nothing to migrate from
-				logrus.Infof("Storage migartion skipped: %s", err)
+				logrus.Infof("Storage migration skipped: %s", err)
 			} else {
 				// rollback on errors
 				if err := storagemigration.FailCleanup(config.Root); err != nil {

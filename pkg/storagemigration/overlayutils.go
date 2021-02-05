@@ -20,7 +20,7 @@ var (
 	ErrOverlayRootExists = errors.New("Overlay2 root exists")
 )
 
-// CheckRootExists checks for the overlay storage root directory
+// CheckOverlayRootExists checks for the overlay storage root directory
 func CheckOverlayRootExists(engineDir string) error {
 	root := filepath.Join(engineDir, "overlay2")
 	logrus.WithField("overlay_root", root).Debug("checking if overlay2 root exists")
