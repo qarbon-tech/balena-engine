@@ -950,11 +950,15 @@ func NewDaemon(ctx context.Context, config *config.Config, pluginStore *plugin.S
 				// overlay root - we have nothing to migrate from
 				logrus.Infof("Storage migration skipped: %s", err)
 			} else {
-				// rollback on errors
+				// rollback partial migration
 				if err := storagemigration.FailCleanup(config.Root); err != nil {
+					// if this fails abort daemon startup
 					return nil, errors.Wrap(err, "failed to cleanup after failed storage migration")
 				}
-				return nil, errors.Wrap(err, "failed to migrate storage")
+				// even though the migration failed with an error
+				// we continue daemon startup on aufs. This allows
+				// for debugging the failed migration by hand.
+				logrus.Errorf("Storage migration failed: %s", err)
 			}
 		} else {
 			// only commit if migration succeded
