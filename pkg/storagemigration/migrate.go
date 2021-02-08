@@ -256,12 +256,7 @@ func transformStateToOverlay(root string, state *State) error {
 				}
 
 			case MetaOther:
-				logrus.WithField("meta_type", "whiteoutmeta").Debugf("removing %s from overlay", meta.Path)
-				if fs, err := LoadIDs(meta.Path); err != nil {
-					return err
-				} else {
-					logrus.Debugf("%#+v", fs)
-				}
+				logrus.WithField("meta_type", "whiteoutmeta").Debugf("removing %s from overlay", metaPath)
 				err = os.Remove(metaPath)
 				if err != nil {
 					return fmt.Errorf("Error removing useless aufs meta file at: %v", err)
